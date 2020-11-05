@@ -10,7 +10,7 @@
 <title>Livros de Programação e Informática</title>
 </head>
 <body>
-	<form:form action="${s:mvcUrl('PC#gravar').build() }" method="post" commandName="produto" enctype="multipart/form-data">
+	<form:form action="${s:mvcUrl('PC#gravar').build() }" method="POST" commandName="produto" enctype="multipart/form-data">
 
 		<div>
 			<label>Titulo</label>

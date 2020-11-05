@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.projeto_mvc.loja.dao.ProdutoDAO;
+import br.com.projeto_mvc.loja.infra.FileSaver;
 import br.com.projeto_mvc.loja.model.Produto;
 import br.com.projeto_mvc.loja.model.TipoPreco;
 import br.com.projeto_mvc.loja.validation.ProdutoValidation;
@@ -26,6 +27,9 @@ public class ProdutosController {
 	
 	@Autowired
 	private ProdutoDAO produtoDao;
+	
+	@Autowired
+	private FileSaver fileSaver;
 	
 	@InitBinder
 	public void InitBinder(WebDataBinder binder) {
@@ -43,13 +47,15 @@ public class ProdutosController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView gravar(MultipartFile sumario, @Valid Produto produto, BindingResult result, RedirectAttributes redirectAttributes) {
 		
-		System.out.println(sumario.getOriginalFilename());
-		
 		if(result.hasErrors()) {
 			return form(produto);
 		}
 		
+		String path = fileSaver.write("arquivos-sumario",sumario);
+		produto.setSumarioPath(path);	
+		
 		produtoDao.gravar(produto); 
+		
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso!");
 		return new ModelAndView("redirect:produtos");
 	}

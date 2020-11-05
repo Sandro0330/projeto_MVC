@@ -15,9 +15,10 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import br.com.projeto_mvc.loja.controller.HomeController;
 import br.com.projeto_mvc.loja.dao.ProdutoDAO;
+import br.com.projeto_mvc.loja.infra.FileSaver;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses={HomeController.class, ProdutoDAO.class})
+@ComponentScan(basePackageClasses={HomeController.class, ProdutoDAO.class, FileSaver.class})
 public class AppWebConfiguration {
 
 	@Bean
@@ -33,7 +34,7 @@ public class AppWebConfiguration {
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasename("/WEB-INF/messages");
-		messageSource.setDefaultEncoding("UTF-8");
+		messageSource.setDefaultEncoding("UTF-8"); 
 		messageSource.setCacheSeconds(1);
 		
 		return messageSource;
